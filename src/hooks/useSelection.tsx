@@ -2,10 +2,12 @@ import * as THREE from "three";
 import { ThreeEvent } from "@react-three/fiber"
 import { useEffect } from "react";
 import { useRef } from "react";
+import { useStore } from '../store/useStore';
 
 export default function useSelection(scene: THREE.Group ){
     const selectedPart = useRef<THREE.Object3D | null>(null);
-
+    const setSelectedPart = useStore((s) => s.setSelectedPart);
+    // const fetchPartInfo = useStore((s) => s.fetchPartInfo);
     useEffect(() => {
         // scene.traverse((child) => {
         //     console.log(child.type, child.name);
@@ -120,6 +122,8 @@ export default function useSelection(scene: THREE.Group ){
 
             });
             selectedPart.current = part;
+            setSelectedPart(part.name);        // ← tell the store which part is selected
+            // fetchPartInfo(part.name);          // ← trigger AI fetch
             if (!part) return;
 
         }

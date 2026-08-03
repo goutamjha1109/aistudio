@@ -27,7 +27,7 @@ export default function Model() {
                 
                 position={[0,0,0]}
                 // rotation={[-Math.PI,0, Math.PI/2]}
-                scale={10}
+                scale={5}
                 onPointerDown={handleClick}
                 onPointerOver={handleHover}
                 onPointerOut={handlePointerOut}

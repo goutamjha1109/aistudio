@@ -7,7 +7,8 @@ import Model from "./Model"
 export default function Viewer() {
 
     return (
-        <div className="w-screen h-screen flex flex-col">
+        // <div className="w-screen h-screen flex flex-col">
+        <div className="w-full h-full flex flex-col">
             <Canvas camera={{ position: [0, 0, 10], fov: 30 }} >
                 {/* <ambientLight intensity={1.2} /> */}
 
