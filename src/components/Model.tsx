@@ -1,39 +1,32 @@
-import { useGLTF,
-         
- } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 
-import * as THREE from "three";
+import useSelection from "../hooks/useSelection";
+import { useStore } from "../store/useStore";
 import { useEffect } from "react";
 
-
-import useSelection from "../hooks/useSelection"
-
-import { ThreeEvent } from "@react-three/fiber";
-
 export default function Model() {
+    const selectedAssembly = useStore((s) => s.selectedAssembly);
 
-    const { scene } = useGLTF("/models/Hooke/HookejointAsm.gltf");
-    const {
-            handleClick,
-            handleHover,
-            handlePointerOut,
-            resetColors,
-        } = useSelection(scene);
+    // Guarded by the parent (page.tsx) rendering Model only when an
+    // assembly is selected — but a fallback keeps this safe either way.
     
+    const { scene } = useGLTF(
+        selectedAssembly ? `/api/models/${selectedAssembly}` : "/api/models/hooke-joint"
+    );
+    const { handleClick, handleHover, handlePointerOut, resetColors } =
+        useSelection(scene);
 
     return (
         <primitive
-                object={scene}
-                
-                position={[0,0,0]}
-                // rotation={[-Math.PI,0, Math.PI/2]}
-                scale={5}
-                onPointerDown={handleClick}
-                onPointerOver={handleHover}
-                onPointerOut={handlePointerOut}
-                onPointerMissed={() => {
-                    resetColors();
-                }}
-            />
+            object={scene}
+            position={[0, 0, 0]}
+            scale={5}
+            onPointerDown={handleClick}
+            onPointerOver={handleHover}
+            onPointerOut={handlePointerOut}
+            onPointerMissed={() => {
+                resetColors();
+            }}
+        />
     );
 }
