@@ -58,7 +58,8 @@ export default function Home() {
   }
 
   return (
-    <main className="w-screen h-screen overflow-hidden bg-gray-100 flex flex-col-reverse lg:flex-row">
+    // <main className="w-screen h-screen overflow-hidden bg-gray-100 flex flex-col-reverse lg:flex-row">
+    <main className="w-screen h-dvh overflow-hidden bg-gray-100 flex flex-col-reverse lg:flex-row">
 
       {/* ── 3D Viewer ─────────────────────────────────────────────── */}
       <section className="flex-1 min-h-0 min-w-0 relative">
@@ -86,7 +87,7 @@ export default function Home() {
         "
         style={{
           // mobile: controlled height
-          height: `${panelHeight}vh`,
+          height: `${panelHeight}dvh`,
           // desktop: override with width, reset height
         }}
       >
@@ -133,7 +134,7 @@ export default function Home() {
         @media (min-width: 1024px) {
           aside {
             width: ${panelWidth}vw !important;
-            height: 100vh !important;
+            height: 100dvh !important;
             position: relative;
           }
         }

@@ -72,7 +72,6 @@ export default function useSelection(scene: THREE.Group ){
     function handlePointerOut(e: ThreeEvent<PointerEvent>) {
 
         const part = e.object.parent;
-
         part?.traverse((child) => {
 
             if (child instanceof THREE.Mesh) {
@@ -146,6 +145,7 @@ export default function useSelection(scene: THREE.Group ){
             }
         });
         selectedPart.current = null;   // ← add this
+        setSelectedPart(null)
     }
     
     return {
