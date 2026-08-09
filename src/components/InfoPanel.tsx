@@ -47,7 +47,7 @@ export default function InfoPanel() {
         {/* Answer area */}
         <div className="flex-1 overflow-y-auto p-4">
         {!partInfoAnswer && !partInfoLoading && !partInfoError && (
-            <p className="text-xs text-gray-400 text-center mt-8">
+            <p className="text-large text-gray-500 text-center mt-8">
             Ask a question or wait for the default answer...
             </p>
         )}
@@ -60,7 +60,7 @@ export default function InfoPanel() {
         )}
 
         {partInfoError && (
-            <p className="text-xs text-red-500 bg-red-50 px-3 py-2 rounded-lg">
+            <p className="text-sm text-red-500 bg-red-50 px-3 py-2 rounded-lg">
             {partInfoError}
             </p>
         )}
@@ -72,39 +72,35 @@ export default function InfoPanel() {
                 <span className="animate-pulse text-gray-400">▌</span>
             </div>
         )}
-        {/* {partInfoAnswer && (
-            <div className="text-sm text-gray-800 leading-relaxed bg-blue-50 
-            rounded-lg px-4 py-3 border border-blue-100">
-            {partInfoAnswer}
-            </div>
-        )} */}
         </div>
 
         {/* Question input */}
-        <div className="px-4 py-3 border-t border-gray-200">
-        <div className="flex gap-2">
-            <input
-                type="text"
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter') handleAsk(); }}
-                placeholder="Ask about this part..."
-                className="flex-1 text-sm   px-3 py-2 rounded-lg border border-gray-200
-                    focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400
-                    placeholder:text-gray-300 bg-white text-gray-800"
-            />
-            <button
-            onClick={handleAsk}
-            disabled={partInfoLoading || !selectedPartName}
-            className="px-3 py-2 rounded-lg bg-blue-500 text-white 
-                hover:bg-blue-600 disabled:opacity-40 transition-colors"
-            >
-            {partInfoLoading
-                ? <Loader2 size={14} className="animate-spin" />
-                : <Send size={14} />
-            }
-            </button>
-        </div>
+        {/* Question input */}
+        <div className="px-4 py-3 border-t border-gray-200 shrink-0">
+            <div className="flex gap-2 items-end">
+                <input
+                    type="text"
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleAsk(); }}
+                    placeholder="Ask about this part..."
+                    className="flex-1 text-base sm:text-lg px-4 py-4 rounded-lg border border-gray-200
+                        focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400
+                        placeholder:text-gray-40 bg-white text-gray-800"
+                />
+                <button
+                    onClick={handleAsk}
+                    disabled={partInfoLoading || !selectedPartName}
+                    className="px-4 py-3 rounded-lg bg-blue-500 text-white 
+                        hover:bg-blue-600 disabled:opacity-40 transition-colors
+                        flex items-center justify-center shrink-0"
+                >
+                    {partInfoLoading
+                        ? <Loader2 size={16} className="animate-spin" />
+                        : <Send size={16} />
+                    }
+                </button>
+            </div>
         </div>
     </div>
     );
