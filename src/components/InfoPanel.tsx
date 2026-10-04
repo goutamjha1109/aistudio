@@ -14,6 +14,7 @@ export default function InfoPanel() {
     const fetchPartInfo = useStore((s) => s.fetchPartInfo);
 
     const [question, setQuestion] = useState('');
+    const isStreaming = useStore((s) => s.isStreaming);
 
     const handleAsk = () => {
     if (!selectedPartName || partInfoLoading) return;
@@ -48,7 +49,7 @@ export default function InfoPanel() {
         <div className="flex-1 overflow-y-auto p-4">
         {!partInfoAnswer && !partInfoLoading && !partInfoError && (
             <p className="text-large text-gray-500 text-center mt-8">
-            Ask a question or wait for the default answer...
+            Type a question below to learn more about this part.
             </p>
         )}
 
@@ -90,7 +91,7 @@ export default function InfoPanel() {
                 />
                 <button
                     onClick={handleAsk}
-                    disabled={partInfoLoading || !selectedPartName}
+                    disabled={partInfoLoading || isStreaming || !selectedPartName}
                     className="px-4 py-3 rounded-lg bg-blue-500 text-white 
                         hover:bg-blue-600 disabled:opacity-40 transition-colors
                         flex items-center justify-center shrink-0"

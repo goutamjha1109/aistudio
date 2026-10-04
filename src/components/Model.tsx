@@ -4,9 +4,13 @@ import useSelection from "../hooks/useSelection";
 import { useStore } from "../store/useStore";
 import { useEffect } from "react";
 
+
+
 export default function Model() {
     const selectedAssembly = useStore((s) => s.selectedAssembly);
 
+    const isStreaming = useStore((s) => s.isStreaming);
+    const partInfoLoading = useStore((s) => s.partInfoLoading);
     // Guarded by the parent (page.tsx) rendering Model only when an
     // assembly is selected — but a fallback keeps this safe either way.
     
@@ -25,6 +29,7 @@ export default function Model() {
             onPointerOver={handleHover}
             onPointerOut={handlePointerOut}
             onPointerMissed={() => {
+                if (isStreaming || partInfoLoading) return;
                 resetColors();
             }}
         />

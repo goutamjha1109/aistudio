@@ -7,6 +7,8 @@ import { useStore } from '../store/useStore';
 export default function useSelection(scene: THREE.Group ){
     const selectedPart = useRef<THREE.Object3D | null>(null);
     const setSelectedPart = useStore((s) => s.setSelectedPart);
+    const isStreaming = useStore((s) => s.isStreaming);
+    const partInfoLoading = useStore((s) => s.partInfoLoading);
 
     useEffect(() => {
         scene.traverse((child) => {
@@ -90,9 +92,11 @@ export default function useSelection(scene: THREE.Group ){
         });
 
     }
+
     function handleClick(e: ThreeEvent<PointerEvent>) {
 
         e.stopPropagation();
+        if (isStreaming || partInfoLoading) return; // ← block mid-answer switching
         // Remove hover glow first
         handlePointerOut(e);
 
@@ -100,9 +104,15 @@ export default function useSelection(scene: THREE.Group ){
 
         console.log("Selected:", part?.name);
 
+        console.log("Clicked mesh:", e.object.name);
+        console.log("Parent:", part?.name);
+        console.log("Selected part:", selectedPart.current);
+
         if (!part) return;
         if (selectedPart.current === part) return;
-
+        scene.traverse((child) => {
+            console.log(child.name);
+        });
         // 1. Deselect previous part
         if (selectedPart.current) {
 

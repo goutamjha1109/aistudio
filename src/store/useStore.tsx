@@ -9,6 +9,7 @@ interface AppState {
   partInfoLoading: boolean;
   partInfoAnswer: string | null;
   partInfoError: string | null;
+  isStreaming: boolean;
   fetchPartInfo: (partName: string, question?: string) => Promise<void>;
 
   // Library / assembly selection
@@ -28,7 +29,15 @@ function normalizePartName(name: string): string {
 
 export const useStore = create<AppState>((set) => ({
   selectedPartName: null,
-  setSelectedPart: (name) => set({ selectedPartName: name }),
+  setSelectedPart: (name) => 
+        set({
+        selectedPartName: name,
+        partInfoAnswer: null,
+        partInfoError: null,
+        partInfoLoading: false,
+        isStreaming: false,
+      }),
+  
 
   partInfoLoading: false,
   partInfoAnswer: null,
@@ -37,7 +46,7 @@ export const useStore = create<AppState>((set) => ({
   availableAssemblies: [],
   selectedAssembly: null,
   assembliesLoading: false,
-  
+  isStreaming: false,
 
   fetchAssemblies: async () => {
     set({ assembliesLoading: true });
@@ -87,9 +96,11 @@ export const useStore = create<AppState>((set) => ({
         answer += decoder.decode(value, { stream: true });
         set({ partInfoAnswer: answer }); // update answer as chunks arrive
       }
+      set({ isStreaming: false})
     } catch (err) {
       set({
         partInfoLoading: false,
+        isStreaming: false,
         partInfoError: err instanceof Error ? err.message : 'Failed to reach backend',
       });
     }
