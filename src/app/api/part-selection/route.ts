@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:8000';
+// const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:8000';
+const BACKEND_URL = 'http://127.0.0.1:8000';
 
 export async function POST(req: NextRequest) {
     const body = await req.json();
+    const userId = req.cookies.get('user_id')?.value;
+    
     const partName = (body.part || '').toLowerCase().replace(/_\d+$/, '');
     console.log('Calling backend with:', { partName, question: body.question });
 

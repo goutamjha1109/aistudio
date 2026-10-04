@@ -13,6 +13,7 @@ const BASE_CAMERA_Z = 10;
 const BASE_FOV = 30;
 
 
+
 /*
  * Calculate camera distance based on the available
  * viewport aspect ratio.
@@ -116,7 +117,9 @@ export default function Viewer() {
     const resetCameraRef =
         useRef<(() => void) | null>(null);
 
-
+    const isStreaming = useStore((s) => s.isStreaming);
+    const partInfoLoading = useStore((s) => s.partInfoLoading);
+    const busy = isStreaming || partInfoLoading;
     return (
         <div className="absolute inset-0">
 
@@ -124,6 +127,7 @@ export default function Viewer() {
             {/* Back to Library */}
         <button
             onClick={resetViewerState}
+            disabled={busy}
             className="
                 fixed top-4 left-4 z-50
                 flex items-center gap-2
@@ -140,6 +144,7 @@ export default function Viewer() {
         {/* Reset View */}
         <button
             onClick={() => resetCameraRef.current?.()}
+            disabled={busy}
             className="
                 fixed top-16 left-4 z-50
                 flex items-center gap-2
